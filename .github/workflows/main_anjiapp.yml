@@ -13,26 +13,32 @@ jobs:
       contents: read
 
     steps:
+      - name: Install PowerShell 7
+        uses: actions/setup-powershell@v2
+        with:
+          pwsh: true
+
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      - name: npm install, build, and test
+      - name: npm install, build, test
+        shell: powershell  # Force Windows PowerShell
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: Webapptesting  # Only include if your package.json is inside this subfolder
+        working-directory: Webapptesting
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: Webapptesting  # Ensure this matches the build output path
+          path: Webapptesting
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,17 +48,17 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: node-app
           path: .
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'anjiapp'  # Must match your Azure Web App name exactly
+          app-name: 'anjiapp'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Ensure this secret is set in GitHub
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
