@@ -13,29 +13,28 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: List directory contents (for debugging)
+      - name: List root directory contents (debugging)
         run: ls -la
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Use stable version for most apps
+          node-version: '18.x'
 
       - name: Install dependencies and build
         run: |
           npm install
           npm run build --if-present
           npm test --if-present
-        working-directory: ./webapptesting  # <-- change this if your folder name is different or remove it if app is in root
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ./webapptesting  # <-- change or remove based on structure
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,10 +48,10 @@ jobs:
         with:
           name: node-app
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'anjiapp'  # <-- Your Azure Web App name
+          app-name: 'anjiapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # <-- Set this secret in your repo
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
