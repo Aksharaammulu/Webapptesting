@@ -13,22 +13,22 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
           cache: 'npm'
 
       - name: Install dependencies
+        working-directory: Webapptesting
+        run: npm ci
+
+      - name: Build and test
+        working-directory: Webapptesting
         run: |
-          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
-            npm ci
-          else
-            npm install
-          fi
           npm run build --if-present
           npm run test --if-present
 
@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: Webapptesting
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,7 +50,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: .
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
