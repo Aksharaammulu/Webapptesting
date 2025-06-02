@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: List repo files (debug)
+        run: dir /s /b
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
 
@@ -22,11 +25,10 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
 
       - name: Restore NuGet packages
-        run: nuget restore Webapptesting.sln
+        run: nuget restore Webapptesting/Webapptesting.sln
 
       - name: Build and publish
-        run: |
-          msbuild Webapptesting.sln /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishUrl=".\published" /p:Configuration=Release
+        run: msbuild Webapptesting/Webapptesting.sln /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishUrl=".\published" /p:Configuration=Release
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
