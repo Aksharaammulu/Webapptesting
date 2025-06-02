@@ -55,4 +55,4 @@ jobs:
           app-name: 'anjiapp'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3D2E73866F114B3387C0BF066BF1FD39 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
