@@ -21,9 +21,6 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Debug - List files
-        run: dir /s /b
-
       - name: Restore dependencies
         run: dotnet restore Webapptesting.csproj
 
