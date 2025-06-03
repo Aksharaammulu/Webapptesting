@@ -21,14 +21,17 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      - name: Debug - List files
+        run: dir /s /b
+
       - name: Restore dependencies
-        run: dotnet restore Webapptesting/Webapptesting.csproj
+        run: dotnet restore Webapptesting.csproj
 
       - name: Build project
-        run: dotnet build Webapptesting/Webapptesting.csproj --configuration Release --no-restore
+        run: dotnet build Webapptesting.csproj --configuration Release --no-restore
 
       - name: Publish project
-        run: dotnet publish Webapptesting/Webapptesting.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
+        run: dotnet publish Webapptesting.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
