@@ -55,4 +55,4 @@ jobs:
           app-name: 'testanji'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05E4B6AA110644E5882D3E2B61A88F37 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
