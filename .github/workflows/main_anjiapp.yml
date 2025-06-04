@@ -16,9 +16,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: List root directory contents (debugging)
-        run: ls -la
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -48,26 +45,22 @@ jobs:
         with:
           name: node-app
 
-      - name: Verify publish profile (debugging)
-        run: |
-          echo "Publish profile length: ${#PUBLISH_PROFILE}"
-          echo "First 50 chars: ${PUBLISH_PROFILE:0:50}"
-        env:
-          PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Deploy to Azure Web App
-        id: deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'anjiapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
 
       - name: Check deployment status
-        if: steps.deploy.outcome != 'success'
+        if: failure()
         run: |
-          echo "Deployment failed!"
-          echo "Check if the app-name and slot-name are correct."
-          echo "Verify the publish profile is valid and not expired."
-        shell: bash
+          echo "Deployment failed. Verify Azure credentials and app name/slot name."
