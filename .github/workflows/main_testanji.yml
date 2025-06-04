@@ -55,18 +55,18 @@ jobs:
         env:
           PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (slot: anji)
         id: deploy
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'anjiapp'
+          app-name: 'anjiapp'  # Replace with your App Service name
+          slot-name: 'anji' # Replace with your actual slot name (remove if not using one)
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
 
       - name: Check deployment status
         if: steps.deploy.outcome != 'success'
         run: |
-          echo "Deployment failed!"
+          echo "❌ Deployment failed!"
           echo "Check if the app-name and slot-name are correct."
-          echo "Verify the publish profile is valid and not expired."
-        shell: bash
+          echo "Verify the publish profile is valid and matches the target slot."
