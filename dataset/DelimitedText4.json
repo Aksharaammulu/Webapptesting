@@ -1,0 +1,92 @@
+{
+	"name": "DelimitedText4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "silver"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "10",
+				"type": "String"
+			},
+			{
+				"name": "01",
+				"type": "String"
+			},
+			{
+				"name": "3",
+				"type": "String"
+			},
+			{
+				"name": "Braund, Mr. Owen Harris",
+				"type": "String"
+			},
+			{
+				"name": "male",
+				"type": "String"
+			},
+			{
+				"name": "22.0",
+				"type": "String"
+			},
+			{
+				"name": "16",
+				"type": "String"
+			},
+			{
+				"name": "07",
+				"type": "String"
+			},
+			{
+				"name": "A/5 21171",
+				"type": "String"
+			},
+			{
+				"name": "7.25",
+				"type": "String"
+			},
+			{
+				"name": "Prop_10",
+				"type": "String"
+			},
+			{
+				"name": "S",
+				"type": "String"
+			},
+			{
+				"name": "Braund",
+				"type": "String"
+			},
+			{
+				"name": "Mr",
+				"type": "String"
+			},
+			{
+				"name": "Owen",
+				"type": "String"
+			},
+			{
+				"name": "Harris",
+				"type": "String"
+			},
+			{
+				"name": "Adult",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

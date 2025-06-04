@@ -1,0 +1,9 @@
+{
+	"name": "intergrationwithadb",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1851c023-235a-4a9a-84a4-d1a045d7aa1e",
+		"tenantId": "75f2a99b-01fd-48f2-ac60-d4a7a44fd0cc"
+	}
+}
